@@ -33,3 +33,9 @@ jobs:
         docker ps
         docker logs test-container
         docker stop test-container
+
+    - name: Health check
+  run: |
+    docker run -d -p 8080:8080 --name app my-app:${{ github.sha }}
+    sleep 10
+    curl -f http://localhost:8080/health || exit 1
