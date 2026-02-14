@@ -14,6 +14,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Build Docker image
         run: docker build -t my-app:${{ github.sha }} .
 
@@ -22,7 +25,7 @@ jobs:
 
       - name: Run tests
         run: npm test
-
+      
       - name: List Docker images
         run: docker images
 
@@ -33,10 +36,14 @@ jobs:
           docker ps
           docker logs test-container
           docker stop test-container
+          docker rm test-container  # Clean up the container after testing
 
       - name: Health check
         run: |
           docker run -d -p 8080:8080 --name app my-app:${{ github.sha }}
           sleep 10
+          docker logs app  # Check application logs
           curl -f http://localhost:8080/health || exit 1
+          docker stop app  # Clean up the container
+          docker rm app  # Remove the container after health check
 
