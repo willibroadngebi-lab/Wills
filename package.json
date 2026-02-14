@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "test": "echo \"No tests defined\""
-
+    "start": "node index.js",
+    "test": "jest"
   },
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.17.1"
+  },
   "devDependencies": {
     "jest": "^27.0.0"
   }
