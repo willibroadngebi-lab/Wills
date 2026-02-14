@@ -17,6 +17,12 @@ jobs:
     - name: Build Docker image
       run: docker build -t my-app:${{ github.sha }} .
 
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm test
+
     - name: List Docker images
       run: docker images
 
