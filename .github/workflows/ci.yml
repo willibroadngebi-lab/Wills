@@ -40,10 +40,10 @@ jobs:
 
       - name: Health check
         run: |
-          docker run -d -p 8080:8080 --name app my-app:${{ github.sha }}
+          docker run -d -p 8081:8080 --name app my-app:${{ github.sha }}
           sleep 10
           docker logs app  # Check application logs
-          curl -f http://localhost:8080/health || exit 1
+          curl -f http://localhost:8081/health || exit 1
           docker stop app  # Clean up the container
           docker rm app  # Remove the container after health check
 
